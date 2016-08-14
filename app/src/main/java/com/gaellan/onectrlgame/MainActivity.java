@@ -8,6 +8,7 @@ import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 
 import java.util.ArrayList;
 
@@ -39,52 +40,58 @@ public class MainActivity extends AppCompatActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        LinearLayout root = (LinearLayout) findViewById(R.id.main_activity);
         mDetector = new GestureDetectorCompat(this,this);
         this._game = new Game();
         this._game.set_map(buildMap());
         this._game.update(this._game.get_player1());
         this._game.update(this._game.get_player2());
-    }
 
-    public void onClickListener(View v)
-    {
-        int playerSelection;
-        Player player;
-        int tmp;
+        root.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int playerSelection;
+                Player player;
+                int tmp;
 
-        int[] boxes = this._game.get_player1().getAvailableBoxes();
-        player = this._game.get_player1();
-        playerSelection = player.get_selectedPosY() * 7 + player.get_selectedPosX();
+                int[] boxes = MainActivity.this._game.get_player1().getAvailableBoxes();
+                player = MainActivity.this._game.get_player1();
+                playerSelection = player.get_selectedPosY() * 7 + player.get_selectedPosX();
 
-        for (int i = 0; i < boxes.length; i++)
-        {
-            if(playerSelection == boxes[i])
-            {
-                if((i + 1) < boxes.length)
+                for (int i = 0; i < boxes.length; i++)
                 {
-                    tmp = boxes[i + 1];
+                    if(playerSelection == boxes[i])
+                    {
+                        if((i + 1) < boxes.length)
+                        {
+                            tmp = boxes[i + 1];
 
-                    this._game.get_player1().set_selectedPosY(tmp / 7);
-                    this._game.get_player1().set_selectedPosX(tmp % 7);
+                            MainActivity.this._game.get_player1().set_selectedPosY(tmp / 7);
+                            MainActivity.this._game.get_player1().set_selectedPosX(tmp % 7);
+                        }
+                        else
+                        {
+                            tmp = boxes[0];
 
-                    Log.v("HUMAN PLAYER", "on touch selected x " + this._game.get_player1().get_selectedPosX());
-                    Log.v("HUMAN PLAYER", "on touch selected y " + this._game.get_player1().get_selectedPosY());
-                    Log.v("HUMAN PLAYER", "on touch selected " + tmp);
+                            MainActivity.this._game.get_player1().set_selectedPosY(tmp / 7);
+                            MainActivity.this._game.get_player1().set_selectedPosX(tmp % 7);
+
+                        }
+                    }
                 }
-                else
-                {
-                    tmp = boxes[0];
-
-                    this._game.get_player1().set_selectedPosY(tmp / 7);
-                    this._game.get_player1().set_selectedPosX(tmp % 7);
-
-                    Log.v("HUMAN PLAYER", "on touch selected x " + this._game.get_player1().get_selectedPosX());
-                    Log.v("HUMAN PLAYER", "on touch selected y " + this._game.get_player1().get_selectedPosY());
-                    Log.v("HUMAN PLAYER", "on touch selected " + tmp);
-                }
+                MainActivity.this._game.updateSelected(getResources().getDrawable(R.drawable.square_grid_box), getResources().getDrawable(R.drawable.square_grid_box_light));
             }
-        }
-        this._game.updateSelected(getResources().getDrawable(R.drawable.square_grid_box), getResources().getDrawable(R.drawable.square_grid_box_light));
+        });
+
+        root.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                MainActivity.this._game.get_player1().set_posX(MainActivity.this._game.get_player1().get_selectedPosX());
+                MainActivity.this._game.get_player1().set_posY(MainActivity.this._game.get_player1().get_selectedPosY());
+                MainActivity.this._game.update(MainActivity.this._game.get_player1());
+                return true;
+            }
+        });
     }
 
     @Override
@@ -93,7 +100,9 @@ public class MainActivity extends AppCompatActivity implements
     // create the function on long press to play the currently selected box
     @Override
     public void onLongPress(MotionEvent event) {
-
+        this._game.get_player1().set_posX(this._game.get_player1().get_selectedPosX());
+        this._game.get_player1().set_posY(this._game.get_player1().get_selectedPosY());
+        this._game.update(this._game.get_player1());
     }
 
     /* Methods that had to be there to implement gesture listener */
