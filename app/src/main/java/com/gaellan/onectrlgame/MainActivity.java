@@ -100,6 +100,10 @@ public class MainActivity extends AppCompatActivity implements
                 MainActivity.this._game.get_player1().set_posX(MainActivity.this._game.get_player1().get_selectedPosX());
                 MainActivity.this._game.get_player1().set_posY(MainActivity.this._game.get_player1().get_selectedPosY());
                 MainActivity.this._game.update(MainActivity.this._game.get_player1());
+
+                MainActivity.this._game.get_player2().play();
+                MainActivity.this._game.update(MainActivity.this._game.get_player2());
+
                 return true;
             }
         });

@@ -45,12 +45,7 @@ public class Game {
     {
         int selectedPlayer1;
 
-        Log.v("HUMAN PLAYER", "update selected x " + this._player1.get_selectedPosX());
-        Log.v("HUMAN PLAYER", "update selected y " + this._player1.get_selectedPosY());
-
         selectedPlayer1 = this._player1.get_selectedPosY() * 7 + this._player1.get_selectedPosX();
-
-        Log.v("HUMAN PLAYER", "update selected " + selectedPlayer1);
 
         for(int i = 0; i < this._map.size(); i++)
         {

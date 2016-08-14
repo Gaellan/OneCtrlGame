@@ -2,6 +2,7 @@ package com.gaellan.onectrlgame;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Random;
 
 public class Player {
     private int _posX;
@@ -93,7 +94,15 @@ public class Player {
     /* Methods only available to IA players */
     public void play()
     {
+        int[] boxes = this.getAvailableBoxes();
+        Random generator = new Random();
+        int selectedBox = boxes[generator.nextInt(boxes.length)];
 
+        this.set_selectedPosY(selectedBox / 7);
+        this.set_selectedPosX(selectedBox % 7);
+
+        this.set_posX(selectedBox % 7);
+        this.set_posY(selectedBox / 7);
     }
 
     public int get_posX() {
