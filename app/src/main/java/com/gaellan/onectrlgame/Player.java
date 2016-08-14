@@ -1,5 +1,8 @@
 package com.gaellan.onectrlgame;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+
 public class Player {
     private int _posX;
     private int _posY;
@@ -13,7 +16,7 @@ public class Player {
         this.init();
     }
 
-    /* Methods for all player types */
+
     public void init(){
         // human player in central box, bottom line
         if(this._type == 1)
@@ -21,18 +24,70 @@ public class Player {
             this._posX = 3;
             this._posY = 6;
             this._selectedPosX = 3;
-            this._selectedPosY = 6;
+            this._selectedPosY = 5;
         }
         // IA player in central box, top line
         else if(this._type == 2)
         {
             this._posX = 3;
             this._posY = 0;
-            this._selectedPosX = 3;
+            this._selectedPosX = 4;
             this._selectedPosY = 0;
         }
         else
             throw new IllegalStateException("Player type is neither human nor IA.");
+    }
+
+    /* Methods for all player types */
+    public int[] getAvailableBoxes(){
+
+        int current = this._posY * 7 + this._posX;
+
+        if(this._posX < 1 && this._posY < 1) // top left corner
+        {
+            int[] boxes = {1, 8, 7};
+            return boxes;
+        }
+        else if(this._posX > 5 && this._posY < 1) // top right corner
+        {
+            int[] boxes = {13, 12, 5};
+            return boxes;
+        }
+        else if(this._posX < 1 && this._posY > 5) // bottom left corner
+        {
+            int[] boxes = {35, 36, 43};
+            return boxes;
+        }
+        else if(this._posX > 5 && this._posY > 5) // bottom right corner
+        {
+            int[] boxes = {47, 40, 41};
+            return boxes;
+        }
+        else if(this._posX < 1) // left col
+        {
+            int[] boxes = {current - 7, current - 6, current + 1, current + 8, current + 7};
+            return boxes;
+        }
+        else if(this._posX > 5) // right col
+        {
+            int[] boxes = {current - 7, current + 7, current + 6, current - 1, current - 8};
+            return boxes;
+        }
+        else if(this._posY < 1) // top line
+        {
+            int[] boxes = {current + 1, current + 8, current + 7, current + 6, current - 1};
+            return boxes;
+        }
+        else if(this._posY > 5) // bottom line
+        {
+            int[] boxes = {current - 7, current - 6, current + 1, current - 1, current - 8};
+            return boxes;
+        }
+        else // nothing special
+        {
+            int[] boxes = {current - 7, current - 6, current + 1, current + 8, current + 7, current + 6, current - 1, current - 8};
+            return boxes;
+        }
     }
 
     /* Methods only available to IA players */

@@ -3,6 +3,7 @@ package com.gaellan.onectrlgame;
 import android.support.v4.view.GestureDetectorCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.widget.Button;
@@ -47,7 +48,44 @@ public class MainActivity extends AppCompatActivity implements
     // create the function on press to choose which box to play
     @Override
     public boolean onTouchEvent(MotionEvent event){
+        int playerSelection;
+        Player player;
+        int tmp;
+
         this.mDetector.onTouchEvent(event);
+        int[] boxes = this._game.get_player1().getAvailableBoxes();
+        player = this._game.get_player1();
+        playerSelection = player.get_selectedPosY() * 7 + player.get_selectedPosX();
+
+        for (int i = 0; i < boxes.length; i++)
+        {
+            if(playerSelection == boxes[i])
+            {
+                if((i + 1) < boxes.length)
+                {
+                    tmp = boxes[i + 1];
+
+                    this._game.get_player1().set_selectedPosY(tmp / 7);
+                    this._game.get_player1().set_selectedPosX(tmp % 7);
+
+                    Log.v("HUMAN PLAYER", "on touch selected x " + this._game.get_player1().get_selectedPosX());
+                    Log.v("HUMAN PLAYER", "on touch selected y " + this._game.get_player1().get_selectedPosY());
+                    Log.v("HUMAN PLAYER", "on touch selected " + tmp);
+                }
+                else
+                {
+                    tmp = boxes[0];
+
+                    this._game.get_player1().set_selectedPosY(tmp / 7);
+                    this._game.get_player1().set_selectedPosX(tmp % 7);
+
+                    Log.v("HUMAN PLAYER", "on touch selected x " + this._game.get_player1().get_selectedPosX());
+                    Log.v("HUMAN PLAYER", "on touch selected y " + this._game.get_player1().get_selectedPosY());
+                    Log.v("HUMAN PLAYER", "on touch selected " + tmp);
+                }
+            }
+        }
+        this._game.updateSelected(getResources().getDrawable(R.drawable.square_grid_box), getResources().getDrawable(R.drawable.square_grid_box_light));
         return super.onTouchEvent(event);
     }
 
