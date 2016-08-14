@@ -3,6 +3,8 @@ package com.gaellan.onectrlgame;
 public class Player {
     private int _posX;
     private int _posY;
+    private int _selectedPosX;
+    private int _selectedPosY;
     private int _score;
     private int _type; // 1 : human player - 2 computer player
 
@@ -18,12 +20,16 @@ public class Player {
         {
             this._posX = 3;
             this._posY = 6;
+            this._selectedPosX = 3;
+            this._selectedPosY = 6;
         }
         // IA player in central box, top line
         else if(this._type == 2)
         {
             this._posX = 3;
             this._posY = 0;
+            this._selectedPosX = 3;
+            this._selectedPosY = 0;
         }
         else
             throw new IllegalStateException("Player type is neither human nor IA.");
@@ -49,6 +55,22 @@ public class Player {
 
     public void set_posY(int _posY) {
         this._posY = _posY;
+    }
+
+    public int get_selectedPosX() {
+        return _selectedPosX;
+    }
+
+    public void set_selectedPosX(int _selectedPosX) {
+        this._selectedPosX = _selectedPosX;
+    }
+
+    public int get_selectedPosY() {
+        return _selectedPosY;
+    }
+
+    public void set_selectedPosY(int _selectedPosY) {
+        this._selectedPosY = _selectedPosY;
     }
 
     public int get_score() {

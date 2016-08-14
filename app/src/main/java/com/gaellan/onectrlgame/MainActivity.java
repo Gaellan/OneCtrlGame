@@ -13,12 +13,14 @@ public class MainActivity extends AppCompatActivity implements
         GestureDetector.OnGestureListener{
 
     private GestureDetectorCompat mDetector;
+    private Game _game;
 
-    private ArrayList<Button> buildMap(ArrayList<Button> map)
+    private ArrayList<Button> buildMap()
     {
+        ArrayList<Button> map = new ArrayList<Button>();
         // use get identifier in order to not have to enter every identifier
-        for(int line=0; line <= 10; line++) {
-            for(int col=0; col <= 10; col++) {
+        for(int line=0; line <= 6; line++) {
+            for(int col=0; col <= 6; col++) {
                 String buttonID = "line_" + line + "_box_" + col;
                 int resID = getResources().getIdentifier(buttonID, "id", getPackageName());
                 Button button;
@@ -26,7 +28,6 @@ public class MainActivity extends AppCompatActivity implements
                 map.add(button);
             }
         }
-
         return map;
     }
 
@@ -35,6 +36,10 @@ public class MainActivity extends AppCompatActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mDetector = new GestureDetectorCompat(this,this);
+        this._game = new Game();
+        this._game.set_map(buildMap());
+        this._game.update(this._game.get_player1());
+        this._game.update(this._game.get_player2());
     }
 
     // create the function on press to choose which box to play
