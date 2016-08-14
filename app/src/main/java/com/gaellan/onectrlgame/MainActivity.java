@@ -53,8 +53,10 @@ public class MainActivity extends AppCompatActivity implements
                 int playerSelection;
                 Player player;
                 int tmp;
+                boolean flag = false;
 
                 int[] boxes = MainActivity.this._game.get_player1().getAvailableBoxes();
+
                 player = MainActivity.this._game.get_player1();
                 playerSelection = player.get_selectedPosY() * 7 + player.get_selectedPosX();
 
@@ -62,6 +64,7 @@ public class MainActivity extends AppCompatActivity implements
                 {
                     if(playerSelection == boxes[i])
                     {
+                        flag = true;
                         if((i + 1) < boxes.length)
                         {
                             tmp = boxes[i + 1];
@@ -78,6 +81,14 @@ public class MainActivity extends AppCompatActivity implements
 
                         }
                     }
+                }
+
+                if(!flag)
+                {
+                    tmp = boxes[0];
+
+                    MainActivity.this._game.get_player1().set_selectedPosY(tmp / 7);
+                    MainActivity.this._game.get_player1().set_selectedPosX(tmp % 7);
                 }
                 MainActivity.this._game.updateSelected(getResources().getDrawable(R.drawable.square_grid_box), getResources().getDrawable(R.drawable.square_grid_box_light));
             }
