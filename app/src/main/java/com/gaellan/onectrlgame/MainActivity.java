@@ -25,6 +25,8 @@ public class MainActivity extends AppCompatActivity implements
                 int resID = getResources().getIdentifier(buttonID, "id", getPackageName());
                 Button button;
                 button = ((Button) findViewById(resID));
+                button.setTextColor(getResources().getColor(R.color.white));
+                button.setTextSize(35);
                 map.add(button);
             }
         }
