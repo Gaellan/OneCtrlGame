@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
+import android.view.View;
 import android.widget.Button;
 
 import java.util.ArrayList;
@@ -45,14 +46,12 @@ public class MainActivity extends AppCompatActivity implements
         this._game.update(this._game.get_player2());
     }
 
-    // create the function on press to choose which box to play
-    @Override
-    public boolean onTouchEvent(MotionEvent event){
+    public void onClickListener(View v)
+    {
         int playerSelection;
         Player player;
         int tmp;
 
-        this.mDetector.onTouchEvent(event);
         int[] boxes = this._game.get_player1().getAvailableBoxes();
         player = this._game.get_player1();
         playerSelection = player.get_selectedPosY() * 7 + player.get_selectedPosX();
@@ -86,8 +85,10 @@ public class MainActivity extends AppCompatActivity implements
             }
         }
         this._game.updateSelected(getResources().getDrawable(R.drawable.square_grid_box), getResources().getDrawable(R.drawable.square_grid_box_light));
-        return super.onTouchEvent(event);
     }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event){return super.onTouchEvent(event);}
 
     // create the function on long press to play the currently selected box
     @Override

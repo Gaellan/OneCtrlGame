@@ -10,6 +10,8 @@
     android:paddingBottom="45dp"
     android:orientation="vertical"
     android:background="#333333"
+    android:id="@+id/main_activity"
+    android:onClick="onClickListener"
     tools:context="com.gaellan.onectrlgame.MainActivity">
 
     <LinearLayout
